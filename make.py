@@ -2,7 +2,8 @@ import os
 import shutil
 import re
 
-TARGET_DIR = "/Users/sangmin/Desktop/09_ML/test"
+# Windows 절대 경로 예시 (드라이브 문자 포함)
+TARGET_DIR = "C:/Users/jiisuu/Desktop/test"
 
 def organize_files():
     pattern = re.compile(r'(\d[LR])\.png$')
