@@ -84,38 +84,37 @@ def predict(img):
     return class_name[2:].strip(), confidence_score
 
 # Streamlit 앱
-def main():
-    st.markdown('<p class="big-font">👋 손꾸락 판별기</p>', unsafe_allow_html=True)
-    st.write("AI가 당신의 손 제스처를 인식합니다. 이미지를 업로드해보세요!")
 
-    uploaded_file = st.file_uploader("이미지를 선택하세요", type=["jpg", "jpeg", "png"])
+st.markdown('<p class="big-font">👋 손꾸락 판별기</p>', unsafe_allow_html=True)
+st.write("AI가 당신의 손 제스처를 인식합니다. 이미지를 업로드해보세요!")
 
-    if uploaded_file is not None:
-        with st.spinner('이미지 처리 중...'):
-            image = Image.open(uploaded_file).convert('RGB')
+uploaded_file = st.file_uploader("이미지를 선택하세요", type=["jpg", "jpeg", "png"])
+
+if uploaded_file is not None:
+    with st.spinner('이미지 처리 중...'):
+        image = Image.open(uploaded_file).convert('RGB')
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.image(image, caption='업로드된 이미지', use_column_width=True)
+        
+        with col2:
+            # 예측
+            result, confidence = predict(image)
+            st.markdown(f'<p class="result-font">인식된 손가락 숫자: {result}</p>', unsafe_allow_html=True)
+            st.write(f"신뢰도: {confidence:.2f}")
             
-            col1, col2 = st.columns(2)
-            with col1:
-                st.image(image, caption='업로드된 이미지', use_column_width=True)
+            # 프로그레스 바로 신뢰도 표시
+            st.progress(float(confidence))
             
-            with col2:
-                # 예측
-                result, confidence = predict(image)
-                st.markdown(f'<p class="result-font">인식된 손가락 숫자: {result}</p>', unsafe_allow_html=True)
-                st.write(f"신뢰도: {confidence:.2f}")
-                
-                # 프로그레스 바로 신뢰도 표시
-                st.progress(float(confidence))
-                
-                # 결과에 따른 이모지 표시
-                if confidence > 0.8:
-                    st.success("높은 신뢰도로 인식되었습니다! 👍")
-                elif confidence > 0.5:
-                    st.warning("중간 정도의 신뢰도입니다. 다시 시도해보세요. 🤔")
-                else:
-                    st.error("낮은 신뢰도입니다. 다른 이미지로 시도해보세요. 😕")
+            # 결과에 따른 이모지 표시
+            if confidence > 0.8:
+                st.success("높은 신뢰도로 인식되었습니다! 👍")
+            elif confidence > 0.5:
+                st.warning("중간 정도의 신뢰도입니다. 다시 시도해보세요. 🤔")
+            else:
+                st.error("낮은 신뢰도입니다. 다른 이미지로 시도해보세요. 😕")
 
-    st.markdown("---")
-    st.write("© 2024 손꾸락 판별기 | 제작: 지상하")
+st.markdown("---")
+st.write("© 2024 손꾸락 판별기 | 제작: 지상하")
 
-main()
