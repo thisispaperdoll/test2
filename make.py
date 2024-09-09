@@ -3,7 +3,7 @@ import shutil
 import re
 
 # Windows 절대 경로 예시 (드라이브 문자 포함)
-TARGET_DIR = "C:/Users/jiisuu/Desktop/test"
+TARGET_DIR = "."
 
 def organize_files():
     pattern = re.compile(r'(\d[LR])\.png$')
