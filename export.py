@@ -118,5 +118,4 @@ def main():
     st.markdown("---")
     st.write("© 2024 손꾸락 판별기 | 제작: 지상하")
 
-if __name__ == "__main__":
-    main()
+main()
