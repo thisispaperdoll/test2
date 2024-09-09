@@ -45,7 +45,7 @@ def load_model_with_custom_objects(model_path):
     return tf.keras.models.load_model(model_path, custom_objects={'DepthwiseConv2D': CustomDepthwiseConv2D}, compile=False)
 
 # Load the model
-model_path = os.path.join(current_dir, "keras_Model.h5")
+model_path = os.path.join(current_dir, "keras_model.h5")
 if not os.path.exists(model_path):
     st.error(f"모델 파일을 찾을 수 없습니다: {model_path}")
     st.stop()
